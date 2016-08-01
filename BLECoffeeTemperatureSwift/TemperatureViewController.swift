@@ -132,7 +132,7 @@ class TemperatureViewController: UIViewController, CBCentralManagerDelegate, CBP
     func pauseScan() {
         // Scanning uses up battery on phone, so pause the scan process for the designated interval.
         print("*** PAUSING SCAN...")
-        NSTimer(timeInterval: timerPauseInterval, target: self, selector: #selector(resumeScan), userInfo: nil, repeats: false)
+        _ = NSTimer(timeInterval: timerPauseInterval, target: self, selector: #selector(resumeScan), userInfo: nil, repeats: false)
         centralManager.stopScan()
         disconnectButton.enabled = true
     }
@@ -144,7 +144,7 @@ class TemperatureViewController: UIViewController, CBCentralManagerDelegate, CBP
             disconnectButton.enabled = false
             temperatureLabel.font = UIFont(name: temperatureLabelFontName, size: temperatureLabelFontSizeMessage)
             temperatureLabel.text = "Searching"
-            NSTimer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
+            _ = NSTimer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
             centralManager.scanForPeripheralsWithServices(nil, options: nil)
         } else {
             disconnectButton.enabled = true
@@ -241,15 +241,16 @@ class TemperatureViewController: UIViewController, CBCentralManagerDelegate, CBP
             
             print(message)
             keepScanning = true
-            NSTimer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
+            _ = NSTimer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
             
             // Initiate Scan for Peripherals
             //Option 1: Scan for all devices
             centralManager.scanForPeripheralsWithServices(nil, options: nil)
             
             // Option 2: Scan for devices that have the service you're interested in...
-            //let temperatureServiceUUID = CBUUID(string: Device.TemperatureServiceUUID)
-            //centralManager.scanForPeripheralsWithServices([temperatureServiceUUID], options: nil)
+//            let sensorTagAdvertisingUUID = CBUUID(string: Device.SensorTagAdvertisingUUID)
+//            print("Scanning for SensorTag adverstising with UUID: \(sensorTagAdvertisingUUID)")
+//            centralManager.scanForPeripheralsWithServices([sensorTagAdvertisingUUID], options: nil)
 
         }
         
@@ -278,7 +279,7 @@ class TemperatureViewController: UIViewController, CBCentralManagerDelegate, CBP
 
      */
     func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
-        print("CBAdvertisementDataLocalNameKey is \"\(CBAdvertisementDataLocalNameKey)\"")
+        print("centralManager didDiscoverPeripheral - CBAdvertisementDataLocalNameKey is \"\(CBAdvertisementDataLocalNameKey)\"")
 
         // Retrieve the peripheral name from the advertisement data using the "kCBAdvDataLocalName" key
         if let peripheralName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
