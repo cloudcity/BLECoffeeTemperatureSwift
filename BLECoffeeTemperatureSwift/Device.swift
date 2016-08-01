@@ -27,6 +27,8 @@ import Foundation
 //------------------------------------------------------------------------
 
 struct Device {
+    
+    static let SensorTagAdvertisingUUID = "AA10"
     static let TemperatureServiceUUID = "F000AA00-0451-4000-B000-000000000000"
     static let TemperatureDataUUID = "F000AA01-0451-4000-B000-000000000000"
     static let TemperatureConfig = "F000AA02-0451-4000-B000-000000000000"
