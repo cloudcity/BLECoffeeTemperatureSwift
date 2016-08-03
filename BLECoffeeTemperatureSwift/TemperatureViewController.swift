@@ -24,10 +24,6 @@ class TemperatureViewController: UIViewController, CBCentralManagerDelegate, CBP
     let timerPauseInterval:NSTimeInterval = 10.0
     let timerScanInterval:NSTimeInterval = 2.0
     
-    // the sensor data will arrive as an array and we will use one or both of the values
-    let sensorDataIndexTempInfrared = 0
-    let sensorDataIndexTempAmbient = 0
-    
     // UI-related
     let temperatureLabelFontName = "HelveticaNeue-Thin"
     let temperatureLabelFontSizeMessage:CGFloat = 56.0
@@ -471,12 +467,12 @@ class TemperatureViewController: UIViewController, CBCentralManagerDelegate, CBP
             print("next int: \(nextInt)")
         }
 
-        let rawAmbientTemp:UInt16 = dataArray[sensorDataIndexTempAmbient]
+        let rawAmbientTemp:UInt16 = dataArray[Device.SensorDataIndexTempAmbient]
         let ambientTempC = Double(rawAmbientTemp) / 128.0
         let ambientTempF = convertCelciusToFahrenheit(ambientTempC)
         print("*** AMBIENT TEMPERATURE SENSOR (C/F): \(ambientTempC), \(ambientTempF)");
         
-        let rawInfraredTemp:UInt16 = dataArray[sensorDataIndexTempInfrared]
+        let rawInfraredTemp:UInt16 = dataArray[Device.SensorDataIndexTempInfrared]
         let infraredTempC = Double(rawInfraredTemp) / 128.0
         let infraredTempF = convertCelciusToFahrenheit(infraredTempC)
         print("*** AMBIENT TEMPERATURE SENSOR (C/F): \(infraredTempC), \(infraredTempF)");
